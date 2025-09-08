@@ -1,3 +1,6 @@
+"use client";
+
+
 import React, { useState } from 'react';
 
 export default function SignupForm() {
@@ -56,7 +59,7 @@ export default function SignupForm() {
   };
 
   try {
-    const response = await fetch("http://fitlog.iubns.net:8080/api/users/signup", {
+    const response = await fetch("https://fitlog.iubns.net:8080/api/users/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
