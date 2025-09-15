@@ -15,9 +15,9 @@ function FindIdForm() {
   // 이메일 인증번호 전송
   const handleSendVerification1 = async () => {
     try {
-      const res = await fetch("http://fitlog.iubns.net:8080/api/email", {
+      const res = await fetch("https://fitlog.iubns.net:8080/api/email", {
         method: "POST",
-        body: {"email":int},
+        body: {"email":String},
       })
       //const res = await fetch("http://fitlog.iubns.net:8080/api/email", {
       //method: "POST",
@@ -42,10 +42,10 @@ function FindIdForm() {
 
   // 인증번호 확인
   const handleSendVerification2 = async () => {
-    try {
-      const res = await fetch("http://fitlog.iubns.net:8080/api/email?code=${code}", {
-        method: "GET",
-         body: {"code":"String"},
+   try {
+      const res = await fetch("https://fitlog.iubns.net:8080/api/users/password/verify-code", {
+        method: "POST",
+       body : {"email": "String", "verificationCode": "String"}
       });
 
       if (!res.ok) throw new Error(`서버 에러: ${res.status}`);
@@ -61,7 +61,7 @@ function FindIdForm() {
   // 아이디 찾기
   const handleFindId = async () => {
     try {
-      const res = await fetch("http://fitlog.iubns.net:8080/api/users/find-id", {
+      const res = await fetch("https://fitlog.iubns.net:8080/api/users/find-id", {
         method: "POST",
         body:({
         "nickname": "String",

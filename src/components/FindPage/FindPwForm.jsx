@@ -20,7 +20,7 @@ function FindPwForm() {
     try {
       const res = await fetch("http://fitlog.iubns.net:8080/api/email", {
         method: "POST",
-        body: {"email":int},
+        body: {"email":String},
         // body: JSON.stringify({ email }),
         // headers: { "Content-Type": "application/json" },
 
@@ -70,19 +70,17 @@ function FindPwForm() {
   //비밀번호 변경 API
   const handlePasswordChange = async () => {
     try {
-      const res = await fetch(`http://fitlog.iubns.net:8080/api/password/reset`, {
-        method: "PATCH",
-        header parameter :
-        -authorization bearer
-        {reset token}
-        {"newpassword" : "String"}
-        // body: JSON.stringify({
-        //   id,
-        //   name,
-        //   email,
-        //   newPassword: newPw,
-        // }),
-      });
+        const res = await fetch(`http://fitlog.iubns.net:8080/api/password/reset`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${resetToken}` // 토큰 변수
+    },
+    body: JSON.stringify({
+      newpassword: newPassword // 새 비밀번호 변수
+    })
+  });
+
 
       if (!res.ok) throw new Error(`서버 오류: ${res.status}`);
 
