@@ -3,7 +3,7 @@ export default function Button({ onClick, children, color, className, ...props }
   return (
       <button 
         className={`
-          ${color ? `bg-[${color}]` : 'bg-gray-[#465C88]'}
+          ${color ? `bg-[${color}]` : 'bg-[#465C88]'}
           text-white
           px-6
           py-4
