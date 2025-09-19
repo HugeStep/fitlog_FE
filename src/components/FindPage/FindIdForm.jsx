@@ -14,17 +14,70 @@ export default function FindIdForm() {
   const [isCodeVerified, setIsCodeVerified] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
-  const handleSendVerification1 = () => {
-    setIsEmailVerified(true);
+  const handleSendVerification1 = async () => {
+    try {
+      const res = await fetch("https://fitlog.iubns.net:8080/api/email", {
+        method: "POST",
+        body: {"email":String},
+      })
+      //const res = await fetch("http://fitlog.iubns.net:8080/api/email", {
+      //method: "POST",
+      //headers: {
+      //"Content-Type": "application/json",
+      //},
+      // body: JSON.stringify({ email }),
+      //});
+
+
+      if (!res.ok) throw new Error(`서버 에러: ${res.status}`);
+
+      const data = await res.json();
+      console.log("이메일 전송 응답:", data);
+      setIsEmailVerified(true);
+    
+    
+    } catch (err) {
+      console.error("이메일 전송 오류:", err);
+    }
+  }
+
+  const handleSendVerification2 = async () => {
+   try {
+      const res = await fetch("https://fitlog.iubns.net:8080/api/users/password/verify-code", {
+        method: "POST",
+       body : {"email": "String", "verificationCode": "String"}
+      });
+
+      if (!res.ok) throw new Error(`서버 에러: ${res.status}`);
+
+      const data = await res.json();
+      console.log("코드 확인 응답:", data);
+      setIsCodeVerified(true);
+    } catch (err) {
+      console.error("코드 확인 오류:", err);
+    }
   };
 
-  const handleSendVerification2 = () => {
-    setIsCodeVerified(true);
-  };
+  const handleFindId = async () => {
+    try {
+      const res = await fetch("https://fitlog.iubns.net:8080/api/users/find-id", {
+        method: "POST",
+        body:({
+        "nickname": "String",
+        "email": "String",
+        }),
+      });
 
-  const handleFindId = () => {
-    setId("SchUniversity");
-    setShowModal(true);
+      if (!res.ok) throw new Error(`서버 에러: ${res.status}`);
+
+      const data = await res.json();
+      console.log("아이디 찾기 응답:", data);
+
+      setId(data?.customid || "아이디를 찾을 수 없습니다");
+      setShowModal(true);
+    } catch (err) {
+      console.error("아이디 찾기 오류:", err);
+    }
   };
 
   const handleCloseModal = () => {
