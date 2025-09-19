@@ -35,9 +35,9 @@ export default function LoginForm() {
   return (
     <>
       <form className="relative flex flex-col gap-2" onSubmit={loginSubmitHandler}>
-        <Input value={id} onChange={e => setId(e.target.value)} type="text" placeholder="아이디" />
-        <Input value={pw} onChange={e => setPw(e.target.value)} type="password" placeholder="비밀번호" />
-        <Button>로그인</Button>
+        <Input value={id} onChange={e => setId(e.target.value)} type="text" placeholder="아이디" required={true} />
+        <Input value={pw} onChange={e => setPw(e.target.value)} type="password" placeholder="비밀번호" required={true} />
+        <Button className={"bg-[#FF7A30]"}>로그인</Button>
         <span className="absolute bottom-[-25px] text-red-600 text-center w-full">{errMessage}</span>
       </form>
       <div className="flex justify-center gap-2 mt-4">

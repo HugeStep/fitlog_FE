@@ -1,17 +1,32 @@
-export default function Input({ type, placeholder, value, onChange }) {
+export default function Input({
+  type = "text", 
+  placeholder, 
+  value, 
+  onChange,
+  required = false,
+  disabled = false,
+  className = "",
+  ...props
+}) {
   return (
       <input 
-        className="
+        className={`
           p-4
           border
           border-gray-300
           rounded-lg
           focus:outline-none focus:ring-2 focus:ring-blue-500
-        " 
+          disabled:cursor-not-allowed
+          disabled:bg-gray-100
+          ${className ? ` ${className}` : ''}
+        `}
         type={type} 
         placeholder={placeholder} 
         value={value} 
         onChange={onChange} 
-        required = {true}/>
+        required={required}
+        disabled={disabled}
+        {...props}
+        />
   );
 }
