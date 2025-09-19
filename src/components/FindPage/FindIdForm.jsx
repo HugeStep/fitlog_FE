@@ -4,7 +4,7 @@ import styles from "./FindIdForm.module.css";
 import Input from "../common/Input/Input";  // Input 컴포넌트 임포트
 import Button from "../common/Button/Button"; // Button 컴포넌트 임포트
 
-export default function FindIdForm() {
+function FindIdForm() {
   const [name, setName] = useState("");
   const [id, setId] = useState("");
   const [email, setEmail] = useState("");
@@ -14,11 +14,15 @@ export default function FindIdForm() {
   const [isCodeVerified, setIsCodeVerified] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
+  // 이메일 인증번호 전송
   const handleSendVerification1 = async () => {
     try {
       const res = await fetch("https://fitlog.iubns.net:8080/api/email", {
         method: "POST",
-        body: {"email":String},
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
       })
       //const res = await fetch("http://fitlog.iubns.net:8080/api/email", {
       //method: "POST",
@@ -41,11 +45,15 @@ export default function FindIdForm() {
     }
   }
 
+  // 인증번호 확인
   const handleSendVerification2 = async () => {
    try {
       const res = await fetch("https://fitlog.iubns.net:8080/api/users/password/verify-code", {
         method: "POST",
-       body : {"email": "String", "verificationCode": "String"}
+        headers: {
+          "Content-Type": "application/json",
+        },
+       body : JSON.stringify({"email": email, "verificationCode": code})
       });
 
       if (!res.ok) throw new Error(`서버 에러: ${res.status}`);
@@ -58,13 +66,14 @@ export default function FindIdForm() {
     }
   };
 
+  // 아이디 찾기
   const handleFindId = async () => {
     try {
       const res = await fetch("https://fitlog.iubns.net:8080/api/users/find-id", {
         method: "POST",
-        body:({
-        "nickname": "String",
-        "email": "String",
+        body: JSON.stringify({
+          "nickname": name,
+          "email": email,
         }),
       });
 
@@ -80,9 +89,7 @@ export default function FindIdForm() {
     }
   };
 
-  const handleCloseModal = () => {
-    setShowModal(false);
-  };
+  const handleCloseModal = () => setShowModal(false);
 
   // 🔒 모든 필드 + 인증 완료 조건
   const isFormValid =
@@ -166,3 +173,5 @@ export default function FindIdForm() {
     </>
   );
 }
+
+export default FindIdForm;
