@@ -4,7 +4,7 @@ import styles from "./FindIdForm.module.css";
 import Input from "../common/Input/Input";  // Input 컴포넌트 임포트
 import Button from "../common/Button/Button"; // Button 컴포넌트 임포트
 
-export default function FindIdForm() {
+function FindIdForm() {
   const [name, setName] = useState("");
   const [id, setId] = useState("");
   const [email, setEmail] = useState("");
@@ -14,22 +14,82 @@ export default function FindIdForm() {
   const [isCodeVerified, setIsCodeVerified] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
-  const handleSendVerification1 = () => {
-    setIsEmailVerified(true);
+  // 이메일 인증번호 전송
+  const handleSendVerification1 = async () => {
+    try {
+      const res = await fetch("https://fitlog.iubns.net:8080/api/email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      })
+      //const res = await fetch("http://fitlog.iubns.net:8080/api/email", {
+      //method: "POST",
+      //headers: {
+      //"Content-Type": "application/json",
+      //},
+      // body: JSON.stringify({ email }),
+      //});
+
+
+      if (!res.ok) throw new Error(`서버 에러: ${res.status}`);
+
+      const data = await res.json();
+      console.log("이메일 전송 응답:", data);
+      setIsEmailVerified(true);
+    
+    
+    } catch (err) {
+      console.error("이메일 전송 오류:", err);
+    }
+  }
+
+  // 인증번호 확인
+  const handleSendVerification2 = async () => {
+   try {
+      const res = await fetch("https://fitlog.iubns.net:8080/api/users/password/verify-code", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+       body : JSON.stringify({"email": email, "verificationCode": code})
+      });
+
+      if (!res.ok) throw new Error(`서버 에러: ${res.status}`);
+
+      const data = await res.json();
+      console.log("코드 확인 응답:", data);
+      setIsCodeVerified(true);
+    } catch (err) {
+      console.error("코드 확인 오류:", err);
+    }
   };
 
-  const handleSendVerification2 = () => {
-    setIsCodeVerified(true);
+  // 아이디 찾기
+  const handleFindId = async () => {
+    try {
+      const res = await fetch("https://fitlog.iubns.net:8080/api/users/find-id", {
+        method: "POST",
+        body: JSON.stringify({
+          "nickname": name,
+          "email": email,
+        }),
+      });
+
+      if (!res.ok) throw new Error(`서버 에러: ${res.status}`);
+
+      const data = await res.json();
+      console.log("아이디 찾기 응답:", data);
+
+      setId(data?.customid || "아이디를 찾을 수 없습니다");
+      setShowModal(true);
+    } catch (err) {
+      console.error("아이디 찾기 오류:", err);
+    }
   };
 
-  const handleFindId = () => {
-    setId("SchUniversity");
-    setShowModal(true);
-  };
-
-  const handleCloseModal = () => {
-    setShowModal(false);
-  };
+  const handleCloseModal = () => setShowModal(false);
 
   // 🔒 모든 필드 + 인증 완료 조건
   const isFormValid =
@@ -113,3 +173,5 @@ export default function FindIdForm() {
     </>
   );
 }
+
+export default FindIdForm;
