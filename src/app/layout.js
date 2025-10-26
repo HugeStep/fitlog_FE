@@ -11,6 +11,7 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className="min-h-screen flex items-center justify-center bg-gray-50">
+      {/* <body> */}
         {children}
       </body>
     </html>

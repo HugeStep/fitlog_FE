@@ -5,7 +5,7 @@ export default function ShopPage() {
   return (
     <div>
       <Shop />
-      <NavigationBar />
+      {/* <NavigationBar /> */}
     </div>
   )
 }
