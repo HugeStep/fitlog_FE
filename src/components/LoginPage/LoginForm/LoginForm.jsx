@@ -19,7 +19,12 @@ export default function LoginForm() {
         password : pw
       })
 
-      // 로그인 성공시 리다이렉팅 해주는게 좋을듯
+      // 로그인 성공시 토큰을 localStorage에 저장
+      if (response.data && response.data.token) {
+        localStorage.setItem('accessToken', response.data.token);
+        console.log('로그인 성공:', response.data.message);
+        // 로그인 성공시 리다이렉팅 해주는게 좋을듯
+      }
     } catch(err) {
       setErrMessage(err.message)
       console.error('로그인실패', err.message)
