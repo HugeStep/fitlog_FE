@@ -1,3 +1,4 @@
+"use client";
 import Bucket from "@/components/ExercisePage/BucketPage/Bucket.jsx";
 import NavigationBar from "@/components/NavigationBar/NavigationBar";
 import { useSearchParams } from "next/navigation";
