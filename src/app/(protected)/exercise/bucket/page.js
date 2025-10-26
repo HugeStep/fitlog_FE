@@ -1,4 +1,5 @@
 import Bucket from "@/components/ExercisePage/BucketPage/Bucket.jsx";
+import NavigationBar from "@/components/NavigationBar/NavigationBar";
 import { useSearchParams } from "next/navigation";
 
 export async function generateStaticParams() {
@@ -11,5 +12,10 @@ export async function generateStaticParams() {
 export default function BucketPage({ params }) {
   const { get } = useSearchParams();
   const type =  get('type')
-  return <Bucket type={type} />;
+  return (
+    <div>
+      <Bucket type={type} />
+      <NavigationBar />
+    </div>
+  );
 } 
