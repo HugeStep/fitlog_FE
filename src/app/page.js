@@ -1,15 +1,9 @@
 "use client";
-import Link from "next/link";
-import NavigationBar from "@/components/NavigationBar/NavigationBar";
-import Character from "@/components/HomePage/Character/Character";
-import RankingIndicator from "@/components/HomePage/RankingIndicator/RankingIndicator";
-import NickName from "@/components/HomePage/NickName/NickName";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Home() {
   const router = useRouter();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -19,7 +13,7 @@ export default function Home() {
     if (!token) {
       router.replace('/login');
     } else {
-      setIsAuthenticated(true);
+      router.replace('/home');
     }
     
     setIsLoading(false);
@@ -34,23 +28,7 @@ export default function Home() {
     );
   }
 
-  // 인증되지 않은 경우 (리다이렉트 중)
-  if (!isAuthenticated) {
-    return null;
-  }
-
-  // 인증된 사용자에게만 보여줄 홈페이지
-  return (
-    <>
-      {/* <h1 className="text-3xl font-bold">홈페이지</h1> */}
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
-        <RankingIndicator />
-        <Character />
-        <NickName />
-      </div>
-        <NavigationBar />
-    </> 
-  )
+  return null;
 }
 
 /*

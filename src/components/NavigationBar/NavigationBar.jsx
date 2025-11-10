@@ -6,15 +6,16 @@ export default function NavigationBar() {
   const pathname = usePathname();
 
   const isActive = (path) => {
-    if (path === "/") {
-      return pathname === "/";
+    if (path === "/home") {
+      // 홈의 경우 /home 또는 / (루트)에서 활성화
+      return pathname === "/home" || pathname === "/";
     }
     return pathname.startsWith(path);
   };
 
   const getLinkClassName = (path) => {
     const baseClass = "flex flex-col items-center py-2 px-3 transition-colors";
-    const activeClass = "text-orange-500";
+    const activeClass = "text-orange-500 font-semibold";
     const inactiveClass = "text-gray-600 hover:text-orange-500";
     
     return `${baseClass} ${isActive(path) ? activeClass : inactiveClass}`;
@@ -31,7 +32,7 @@ export default function NavigationBar() {
           <span className="material-icons text-xl mb-1">fitness_center</span>
           <span className="text-xs">운동</span>
         </Link>
-        <Link href={"/"} className={getLinkClassName("/")}>
+        <Link href={"/home"} className={getLinkClassName("/home")}>
           <span className="material-icons text-xl mb-1">home</span>
           <span className="text-xs">홈</span>
         </Link>

@@ -23,7 +23,8 @@ export default function LoginForm() {
       if (response.data && response.data.token) {
         localStorage.setItem('accessToken', response.data.token);
         console.log('로그인 성공:', response.data.message);
-        // 로그인 성공시 리다이렉팅 해주는게 좋을듯
+        // 로그인 성공시 홈페이지로 리다이렉트
+        window.location.href = '/home';
       }
     } catch(err) {
       setErrMessage(err.message)
