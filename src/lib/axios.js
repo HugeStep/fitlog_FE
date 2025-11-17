@@ -7,7 +7,7 @@ axios.defaults.headers.post['Content-Type'] = 'application/json' // post 요청�
 // 인증/인가 필요한 API에 대해서 token값을 쿠키에 보낼지, localStorage에서 꺼내서 headers : Authorization에 보낼지 
 이렇게 해놔도 아래에 반영안된다고 함
 */
-const baseURL = "https://fitlog.iubns.net:8080"
+const baseURL = "https://fitlog.iubns.net"
 const normalAPI = axios.create({
   baseURL : baseURL,
   headers : {

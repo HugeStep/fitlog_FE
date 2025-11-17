@@ -60,16 +60,17 @@ export default function SignupForm() {
   };
 
   try {
-    const response = await fetch("https://fitlog.iubns.net:8080/api/users/signup", {
+    const response = await fetch("https://fitlog.iubns.net/api/users/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
 
-    if (response.status === 201) {
+    if (response.status === 200) {
       const data = await response.json();
       alert(data.message);
-      // 가입 후 원하는 동작 (ex 페이지 이동)
+      // 가입 후 로그인 페이지로 이동
+      window.location.href = '/login';
     } else if (response.status === 400) {
       const error = await response.json();
       alert(error.message || Object.values(error)[0]);
