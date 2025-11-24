@@ -1,7 +1,12 @@
+import Callender from "@/components/CallendarPage/Callender";
+import NavigationBar from "@/components/NavigationBar/NavigationBar";
+
 export default function CalendarPage() {
+  console.log('캘린더page 랜더링!!');
   return (
     <div>
-      <h1>캘린더 페이지</h1>
+      <Callender />
+      <NavigationBar />
     </div>
   )
 }
